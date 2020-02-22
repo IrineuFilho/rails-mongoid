@@ -7,7 +7,7 @@ class Complain
   field :created_at, type: DateTime
   field :updated_at, type: DateTime
 
-  embeds_one :customer, class_name: "Customer", inverse_of: :complain
+  belongs_to :customer, inverse_of: :complain
 
   before_save :set_created_updated, unless: -> { self.persisted? }
   before_save :set_updated_at, if: -> { self.persisted? }

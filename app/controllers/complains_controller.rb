@@ -14,7 +14,7 @@ class ComplainsController < ApplicationController
   def create
     @complain = Complain.create(complain_params)
     if @complain.persisted?
-      render json: @complain, status: :created, location: @complain
+      render json: @complain, status: :created
     else
       render json: @complain.errors, status: :unprocessable_entity
     end
