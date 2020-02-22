@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class ComplainsController < ApplicationController
-  before_action :set_complain, only: [:show, :update, :destroy]
+  before_action :set_complain, only: %i[show update destroy]
 
   def index
     @complains = Complain.all
@@ -40,10 +42,10 @@ class ComplainsController < ApplicationController
 
   def complain_params
     params
-        .require(:complain)
-        .permit(:title,
-                :description,
-                :locale,
-                :company)
+      .require(:complain)
+      .permit(:title,
+              :description,
+              :locale,
+              :company)
   end
 end

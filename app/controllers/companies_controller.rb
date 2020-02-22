@@ -1,6 +1,7 @@
-class CompaniesController < ApplicationController
+# frozen_string_literal: true
 
-  before_action :set_company, only: [:show, :update, :destroy]
+class CompaniesController < ApplicationController
+  before_action :set_company, only: %i[show update destroy]
 
   def index
     @companies = ::Queries::CompanyQuery.call(company_filter, direction: params[:direction].downcase)
@@ -41,14 +42,14 @@ class CompaniesController < ApplicationController
 
   def company_params
     params
-        .require(:company)
-        .permit(:name,
-                :cnpj,
-                :city_id)
+      .require(:company)
+      .permit(:name,
+              :cnpj,
+              :city_id)
   end
 
   def company_filter
     params
-        .permit(:name, :cnpj)
+      .permit(:name, :cnpj)
   end
 end

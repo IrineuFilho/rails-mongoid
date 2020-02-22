@@ -8,7 +8,9 @@ ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
 
 # Prevent database truncation if the environment is production
-abort('The Rails environment is running in production mode!') if Rails.env.production?
+if Rails.env.production?
+  abort('The Rails environment is running in production mode!')
+end
 require 'rspec/rails'
 require 'mongoid-rspec'
 
@@ -39,7 +41,6 @@ Dir[Rails.root.join('spec', 'support', '**', '*.rb')].sort.each { |f| require f 
 # end
 
 RSpec.configure do |config|
-
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
@@ -82,5 +83,4 @@ RSpec.configure do |config|
 
   # Configure factory bot
   config.include FactoryBot::Syntax::Methods
-
 end
