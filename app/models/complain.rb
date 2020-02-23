@@ -11,4 +11,6 @@ class Complain
 
   belongs_to :customer, inverse_of: :complain
   belongs_to :company, inverse_of: :complain
+
+  embeds_many :complain_responses
 end

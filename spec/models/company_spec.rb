@@ -19,6 +19,6 @@ RSpec.describe Company, type: :model do
     it_behaves_like 'number relations on class', described_class, 2
 
     it { is_expected.to belong_to(:city).with_foreign_key(:city_id).as_inverse_of(:company) }
-    it { is_expected.to have_many(:complains).as_inverse_of(:company).with_dependent(:destroy)}
+    it { is_expected.to have_many(:complains).as_inverse_of(:company).with_dependent(:destroy) }
   end
 end

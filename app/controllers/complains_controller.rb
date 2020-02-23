@@ -45,7 +45,8 @@ class ComplainsController < ApplicationController
       .require(:complain)
       .permit(:title,
               :description,
-              :locale,
-              :company)
+              :locale_id,
+              :company_id,
+              :customer_id)
   end
 end
