@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :complain do
-    title { 'Complain Title' }
-    description { 'Complain Description' }
+  factory :complaint do
+    title { 'Complaint Title' }
+    description { 'Complaint Description' }
     locale { create(:city) }
     customer { create(:customer) }
     company { create(:company) }

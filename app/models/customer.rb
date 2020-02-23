@@ -7,5 +7,5 @@ class Customer
   field :name, type: String
   field :email, type: String
 
-  has_many :complains, inverse_of: :customer, dependent: :restrict_with_exception
+  has_many :complaints, inverse_of: :customer, dependent: :restrict_with_exception
 end

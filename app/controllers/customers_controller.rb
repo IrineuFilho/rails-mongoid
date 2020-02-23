@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CustomersController < ApplicationController
-  before_action :set_complain, only: %i[show update destroy]
+  before_action :set_complaint, only: %i[show update destroy]
 
   def index
     @customers = Customer.all

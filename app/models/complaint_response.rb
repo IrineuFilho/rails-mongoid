@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ComplainResponse
+class ComplaintResponse
   include Mongoid::Document
   include Mongoid::Timestamps
 
@@ -8,7 +8,7 @@ class ComplainResponse
   field :owner_id, type: String
   field :owner_type, type: String
 
-  embedded_in :complain
+  embedded_in :complaint
 
   def owner
     owner_type.constantize.find({ id: owner_id })

@@ -2,29 +2,29 @@
 
 require 'rails_helper'
 
-RSpec.describe ComplainResponse, type: :model do
+RSpec.describe ComplaintResponse, type: :model do
   describe 'described_class should be' do
     it_behaves_like 'a mongoid_document', described_class
   end
 
   describe 'instance custom methods' do
-    subject { build(:complain_response) }
+    subject { build(:complaint_response) }
     it { expect(subject.respond_to?(:owner)).to be }
   end
 
   describe 'owner method return corrent owner association' do
     let(:customer) { create(:customer) }
     let(:company) { create(:company) }
-    let(:complain) { create(:complain, customer: customer, company: company) }
+    let(:complaint) { create(:complaint, customer: customer, company: company) }
 
-    context 'when owner of complain response is a Customer' do
-      subject { create(:complain_response, complain: complain, owner: customer) }
+    context 'when owner of complaint response is a Customer' do
+      subject { create(:complaint_response, complaint: complaint, owner: customer) }
       it { expect(subject.owner).to eq(customer) }
       it { expect(subject.owner.class).to be(Customer) }
     end
 
-    context 'when owner of complain response is a Company' do
-      subject { create(:complain_response, complain: complain, owner: company) }
+    context 'when owner of complaint response is a Company' do
+      subject { create(:complaint_response, complaint: complaint, owner: company) }
       it { expect(subject.owner).to eq(company) }
       it { expect(subject.owner.class).to be(Company) }
     end
@@ -43,6 +43,6 @@ RSpec.describe ComplainResponse, type: :model do
   describe 'list associations' do
     it_behaves_like 'number relations on class', described_class, 1
 
-    it { is_expected.to be_embedded_in(:complain) }
+    it { is_expected.to be_embedded_in(:complaint) }
   end
 end

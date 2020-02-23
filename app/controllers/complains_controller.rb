@@ -1,48 +1,48 @@
 # frozen_string_literal: true
 
-class ComplainsController < ApplicationController
-  before_action :set_complain, only: %i[show update destroy]
+class ComplaintsController < ApplicationController
+  before_action :set_complaintt, only: %i[show update destroy]
 
   def index
-    @complains = Complain.all
+    @complaintts = Complaint.all
 
-    render json: @complains
+    render json: @complaintts
   end
 
   def show
-    render json: @complain
+    render json: @complaintt
   end
 
   def create
-    @complain = Complain.create(complain_params)
-    if @complain.persisted?
-      render json: @complain, status: :created
+    @complaintt = Complaint.create(complaintt_params)
+    if @complaintt.persisted?
+      render json: @complaintt, status: :created
     else
-      render json: @complain.errors, status: :unprocessable_entity
+      render json: @complaint.errors, status: :unprocessable_entity
     end
   end
 
   def update
-    if @complain.update(complain_params)
-      render json: @complain
+    if @complaint.update(complaint_params)
+      render json: @complaint
     else
-      render json: @complain.errors, status: :unprocessable_entity
+      render json: @complaint.errors, status: :unprocessable_entity
     end
   end
 
   def destroy
-    @complain.destroy
+    @complaint.destroy
   end
 
   private
 
-  def set_complain
-    @complain = Complain.find(params[:id])
+  def set_complaint
+    @complaint = Complaint.find(params[:id])
   end
 
-  def complain_params
+  def complaint_params
     params
-      .require(:complain)
+      .require(:complaint)
       .permit(:title,
               :description,
               :locale_id,

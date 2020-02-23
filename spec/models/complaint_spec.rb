@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Complain, type: :model do
+RSpec.describe Complaint, type: :model do
   describe 'described_class should be' do
     it_behaves_like 'a mongoid_document', described_class
   end
@@ -22,9 +22,9 @@ RSpec.describe Complain, type: :model do
   describe 'list associations' do
     it_behaves_like 'number relations on class', described_class, 4
 
-    it { is_expected.to belong_to(:customer).as_inverse_of(:complain) }
-    it { is_expected.to belong_to(:company).as_inverse_of(:complain) }
-    it { is_expected.to embed_many(:complain_responses) }
-    it { is_expected.to belong_to(:locale).with_foreign_key(:locale_id).as_inverse_of(:complain) }
+    it { is_expected.to belong_to(:customer).as_inverse_of(:complaint) }
+    it { is_expected.to belong_to(:company).as_inverse_of(:complaint) }
+    it { is_expected.to embed_many(:complaint_responses) }
+    it { is_expected.to belong_to(:locale).with_foreign_key(:locale_id).as_inverse_of(:complaint) }
   end
 end

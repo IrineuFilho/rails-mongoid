@@ -19,6 +19,6 @@ RSpec.describe Customer, type: :model do
   describe 'list associations' do
     it_behaves_like 'number relations on class', described_class, 1
 
-    it { is_expected.to have_many(:complains).with_foreign_key(:customer_id) }
+    it { is_expected.to have_many(:complaints).with_foreign_key(:customer_id) }
   end
 end
