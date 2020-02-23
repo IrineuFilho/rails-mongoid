@@ -1,22 +1,22 @@
 # frozen_string_literal: true
 
 class ComplaintsController < ApplicationController
-  before_action :set_complaintt, only: %i[show update destroy]
+  before_action :set_complaint, only: %i[show update destroy]
 
   def index
-    @complaintts = Complaint.all
+    @complaints = Complaint.all
 
-    render json: @complaintts
+    render json: @complaints
   end
 
   def show
-    render json: @complaintt
+    render json: @complaint
   end
 
   def create
-    @complaintt = Complaint.create(complaintt_params)
-    if @complaintt.persisted?
-      render json: @complaintt, status: :created
+    @complaint = Complaint.create(complaint_params)
+    if @complaint.persisted?
+      render json: @complaint, status: :created
     else
       render json: @complaint.errors, status: :unprocessable_entity
     end
