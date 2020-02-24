@@ -1,0 +1,26 @@
+version: '3'
+volumes:
+  postgres_data: {}
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./docker/app/Dockerfile
+    depends_on:
+      - db
+    ports:
+      - 3000:3000
+  db:
+    image: mongo
+    volumes:
+      - postgres_data:/var/lib/mongo/data
+    ports:
+      - 27017:27017
+  web:
+    build:
+      context: .
+      dockerfile: ./docker/web/Dockerfile
+    depends_on:
+      - app
+    ports:
+      - 80:80
