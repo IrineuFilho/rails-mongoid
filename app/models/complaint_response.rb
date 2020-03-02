@@ -5,7 +5,7 @@ class ComplaintResponse
   include Mongoid::Timestamps
 
   field :response_text, type: String
-  field :owner_id, type: String
+  field :owner_id, type: BSON::ObjectId
   field :owner_type, type: String
 
   embedded_in :complaint

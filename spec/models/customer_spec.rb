@@ -16,9 +16,7 @@ RSpec.describe Customer, type: :model do
     it { is_expected.to have_field(:email).of_type(String) }
   end
 
-  describe 'list associations' do
-    it_behaves_like 'number relations on class', described_class, 1
-
-    it { is_expected.to have_many(:complaints).with_foreign_key(:customer_id) }
+  describe 'embed objects' do
+    it_behaves_like 'embed one object', described_class, :locale
   end
 end

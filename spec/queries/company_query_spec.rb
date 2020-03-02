@@ -44,10 +44,6 @@ RSpec.describe Queries::CompanyQuery, type: :query do
         expect(described_class.call({ cnpj: company_1.cnpj }).count).to eq(1)
       end
 
-      it 'when exist more than one results criteria, result count should be 2' do
-        expect(described_class.call({ name: company_1.name, cnpj: company_2.cnpj }).count).to eq(2)
-      end
-
       it 'when exist more than one company with passed parameters, result should contain the companies' do
         expect(described_class.call({ name: company_1.name, cnpj: company_1.cnpj }).include?(company_1)).to be
         expect(described_class.call({ name: company_2.name, cnpj: company_2.cnpj }).include?(company_2)).to be

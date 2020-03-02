@@ -19,6 +19,7 @@ RSpec.describe ComplaintResponse, type: :model do
 
     context 'when owner of complaint response is a Customer' do
       subject { create(:complaint_response, complaint: complaint, owner: customer) }
+
       it { expect(subject.owner).to eq(customer) }
       it { expect(subject.owner.class).to be(Customer) }
     end
@@ -35,14 +36,12 @@ RSpec.describe ComplaintResponse, type: :model do
 
     it { is_expected.to have_timestamps }
     it { is_expected.to have_field('_id').of_type(BSON::ObjectId) }
+    it { is_expected.to have_field('owner_id').of_type(BSON::ObjectId) }
+    it { is_expected.to have_field('owner_type').of_type(String) }
     it { is_expected.to have_field(:response_text).of_type(String) }
-    it { is_expected.to have_field(:owner_id).of_type(String) }
-    it { is_expected.to have_field(:owner_type).of_type(String) }
   end
 
-  describe 'list associations' do
-    it_behaves_like 'number relations on class', described_class, 1
-
-    it { is_expected.to be_embedded_in(:complaint) }
+  describe 'embedded or embedded_in object' do
+    it_behaves_like 'embedded_in', described_class, :complaint
   end
 end

@@ -6,7 +6,5 @@ class Company
   field :name, type: String
   field :cnpj, type: String
 
-  belongs_to :city, inverse_of: :company
-
-  has_many :complaints, inverse_of: :company, dependent: :destroy
+  embeds_one :locale, class_name: '::City', inverse_of: :company
 end
