@@ -12,4 +12,6 @@ class Complaint
   embeds_one :company, inverse_of: :complaint
 
   embeds_many :complaint_responses
+
+  validates :title, :description, presence: true
 end

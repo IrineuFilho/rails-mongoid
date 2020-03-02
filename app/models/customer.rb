@@ -8,4 +8,6 @@ class Customer
   field :email, type: String
 
   embeds_one :locale, class_name: '::City', inverse_of: :customer
+
+  validates :name, :email, presence: true
 end

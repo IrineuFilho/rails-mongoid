@@ -22,4 +22,41 @@ RSpec.describe Complaint, type: :model do
     it_behaves_like 'embed one object', described_class, :company
     it_behaves_like 'embeds maby object', described_class, :complaint_responses
   end
+
+  describe 'validations' do
+    describe 'presence of' do
+      context 'valid' do
+        let(:complaint) { attributes_for(:complaint) }
+        subject { Complaint.new(complaint) }
+
+        it { expect(subject).to be_valid }
+      end
+
+      context 'invalid' do
+        context 'without title' do
+          let(:complaint) { attributes_for(:complaint, :without_title) }
+
+          subject { Complaint.new(complaint) }
+
+          it { expect(subject).not_to be_valid }
+          it 'errors must be populated' do
+            subject.valid?
+            expect(subject.errors.any?).to be
+          end
+        end
+
+        context 'without description' do
+          let(:complaint) { attributes_for(:complaint, :without_title) }
+
+          subject { Complaint.new(complaint) }
+
+          it { expect(subject).not_to be_valid }
+          it 'errors must be populated' do
+            subject.valid?
+            expect(subject.errors.any?).to be
+          end
+        end
+      end
+    end
+  end
 end

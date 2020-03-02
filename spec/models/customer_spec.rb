@@ -19,4 +19,25 @@ RSpec.describe Customer, type: :model do
   describe 'embed objects' do
     it_behaves_like 'embed one object', described_class, :locale
   end
+
+  describe 'validations' do
+    context 'valid' do
+      subject { build(:customer) }
+      it { expect(subject).to be_valid }
+    end
+
+    context 'presence of name' do
+      context 'invalid' do
+        subject { build(:customer, :without_name) }
+        it { expect(subject).not_to be_valid }
+      end
+    end
+
+    context 'presence of email' do
+      context 'invalid' do
+        subject { build(:customer, :without_email) }
+        it { expect(subject).not_to be_valid }
+      end
+    end
+  end
 end
