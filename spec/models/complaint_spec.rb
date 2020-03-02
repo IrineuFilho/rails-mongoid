@@ -26,35 +26,21 @@ RSpec.describe Complaint, type: :model do
   describe 'validations' do
     describe 'presence of' do
       context 'valid' do
-        let(:complaint) { attributes_for(:complaint) }
-        subject { Complaint.new(complaint) }
-
+        subject { build(:complaint) }
         it { expect(subject).to be_valid }
       end
 
       context 'invalid' do
+        before(:each) { subject.valid? }
         context 'without title' do
-          let(:complaint) { attributes_for(:complaint, :without_title) }
-
-          subject { Complaint.new(complaint) }
-
+          subject { build(:complaint, :without_title) }
           it { expect(subject).not_to be_valid }
-          it 'errors must be populated' do
-            subject.valid?
-            expect(subject.errors.any?).to be
-          end
+          it { expect(subject.errors.full_messages).to include 'Title can\'t be blank' }
         end
-
         context 'without description' do
-          let(:complaint) { attributes_for(:complaint, :without_title) }
-
-          subject { Complaint.new(complaint) }
-
+          subject { build(:complaint, :without_description) }
           it { expect(subject).not_to be_valid }
-          it 'errors must be populated' do
-            subject.valid?
-            expect(subject.errors.any?).to be
-          end
+          it { expect(subject.errors.full_messages).to include 'Description can\'t be blank' }
         end
       end
     end

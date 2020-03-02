@@ -26,17 +26,19 @@ RSpec.describe Customer, type: :model do
       it { expect(subject).to be_valid }
     end
 
-    context 'presence of name' do
-      context 'invalid' do
+    context 'invalid' do
+      before(:each) { subject.valid? }
+
+      context 'without name' do
         subject { build(:customer, :without_name) }
         it { expect(subject).not_to be_valid }
+        it { expect(subject.errors.full_messages).to include 'Name can\'t be blank' }
       end
-    end
 
-    context 'presence of email' do
-      context 'invalid' do
+      context 'without email' do
         subject { build(:customer, :without_email) }
         it { expect(subject).not_to be_valid }
+        it { expect(subject.errors.full_messages).to include 'Email can\'t be blank' }
       end
     end
   end

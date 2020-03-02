@@ -17,4 +17,23 @@ RSpec.describe Company, type: :model do
   describe 'list embeds objects' do
     it_behaves_like 'embed one object', described_class, :locale
   end
+
+  describe 'validations' do
+    describe 'presence of name' do
+      context 'valid' do
+        subject { build(:company) }
+        it { expect(subject).to be_valid }
+      end
+
+      context 'invalid' do
+        subject { build(:company, :without_name) }
+
+        it { expect(subject).not_to be_valid }
+        it 'errors must be populated' do
+          subject.valid?
+          expect(subject.errors.full_messages).to include('Name can\'t be blank')
+        end
+      end
+    end
+  end
 end

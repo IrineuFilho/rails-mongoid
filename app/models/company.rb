@@ -7,4 +7,6 @@ class Company
   field :cnpj, type: String
 
   embeds_one :locale, class_name: '::City', inverse_of: :company
+
+  validates :name, presence: true
 end
