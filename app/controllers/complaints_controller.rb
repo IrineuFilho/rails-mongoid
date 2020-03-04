@@ -4,9 +4,16 @@ class ComplaintsController < ApplicationController
   before_action :set_complaint, only: %i[show update destroy]
 
   def index
-    @complaints = Complaint.all
 
-    render json: @complaints
+    begin
+      result = ::Queries::ComplaintQuery.call(complaints_search_params.to_h)
+    rescue ArgumentError => e
+      render json: 'Some arguntment you passed is invalid', status: :unprocessable_entity
+    rescue BSON::ObjectId::Invalid => e
+      render json: 'company_id or customer_id are invalid', status: :unprocessable_entity
+    end
+
+    render json: result
   end
 
   def show
@@ -14,19 +21,13 @@ class ComplaintsController < ApplicationController
   end
 
   def create
-    @complaint = Complaint.create(complaint_params)
-    if @complaint.persisted?
-      render json: @complaint, status: :created
-    else
-      render json: @complaint.errors, status: :unprocessable_entity
-    end
-  end
-
-  def update
-    if @complaint.update(complaint_params)
-      render json: @complaint
-    else
-      render json: @complaint.errors, status: :unprocessable_entity
+    ::Services::Complaints::CreateComplaintService.new(complaint_params).call do |callback|
+      callback.on_success do |complaint|
+        render json: complaint, status: :created
+      end
+      callback.on_fail do |errors|
+        render json: errors, status: :unprocessable_entity
+      end
     end
   end
 
@@ -42,11 +43,15 @@ class ComplaintsController < ApplicationController
 
   def complaint_params
     params
-      .require(:complaint)
-      .permit(:title,
-              :description,
-              :locale_id,
-              :company_id,
-              :customer_id)
+        .permit(:title,
+                :description,
+                :company_id,
+                :customer_id)
+  end
+
+  def complaints_search_params
+    params
+        .permit(:locale, :company_id, :customer_id)
+        .to_h
   end
 end

@@ -1,6 +1,7 @@
+# frozen_string_literal: true
+
 module Callbacks
   class UseCaseCallback
-
     def self.success(object = nil)
       UseCaseCallback.new(:success, object)
     end
@@ -25,6 +26,5 @@ module Callbacks
       @status = status
       @object = object
     end
-
   end
 end

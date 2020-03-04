@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class CompaniesController < ApplicationController
-  before_action :set_company, only: %i[show update destroy]
+  before_action :set_company, only: %i[show destroy]
 
   def index
-    @companies = ::Queries::CompanyQuery.call(company_filter, direction: params[:direction].downcase)
+    @companies = ::Queries::CompanyQuery.call(company_filter, direction: params_direction)
     render json: @companies
   end
 
@@ -13,20 +13,13 @@ class CompaniesController < ApplicationController
   end
 
   def create
-    @company = Company.create(company_params)
-
-    if @company.persisted?
-      render json: @company, status: :created
-    else
-      render json: @company.errors, status: :unprocessable_entity
-    end
-  end
-
-  def update
-    if @company.update(company_params)
-      render json: @company
-    else
-      render json: @company.errors, status: :unprocessable_entity
+    ::Services::Companies::CreateCompanyService.new(company_params).call do |callback|
+      callback.on_success do |company|
+        render json: company, status: :created
+      end
+      callback.on_fail do |errors|
+        render json: errors, status: :unprocessable_entity
+      end
     end
   end
 
@@ -36,20 +29,27 @@ class CompaniesController < ApplicationController
 
   private
 
+  def params_direction
+    if params[:direction].present?
+      params[:direction].downcase
+    else
+      'asc'
+    end
+  end
+
   def set_company
     @company = Company.find(params[:id])
   end
 
   def company_params
     params
-      .require(:company)
       .permit(:name,
               :cnpj,
-              :city_id)
+              :locale)
   end
 
   def company_filter
     params
-      .permit(:name, :cnpj)
+      .permit(:name, :cnpj, :locale)
   end
 end

@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class CustomersController < ApplicationController
-  before_action :set_complaint, only: %i[show update destroy]
+  before_action :set_complaint, only: %i[show destroy]
 
   def index
-    @customers = Customer.all
+    @customers = ::Queries::CustomerQuery.call(permitted_fields)
 
     render json: @customers
   end
@@ -14,19 +14,13 @@ class CustomersController < ApplicationController
   end
 
   def create
-    @customer = Customer.create(customer_params)
-    if @customer.persisted?
-      render json: @customer, status: :created
-    else
-      render json: @customer.errors, status: :unprocessable_entity
-    end
-  end
-
-  def update
-    if @customer.update(customer_params)
-      render json: @customer
-    else
-      render json: @customer.errors, status: :unprocessable_entity
+    ::Services::Customers::CreateCustomerService.new(customer_params).call do |callback|
+      callback.on_success do |customer|
+        render json: customer, status: :created
+      end
+      callback.on_fail do |errors|
+        render json: errors, status: :unprocessable_entity
+      end
     end
   end
 
@@ -42,8 +36,12 @@ class CustomersController < ApplicationController
 
   def customer_params
     params
-      .require(:customer)
       .permit(:name,
-              :email)
+              :email,
+              :locale)
+  end
+
+  def permitted_fields
+    customer_params
   end
 end
