@@ -3,16 +3,15 @@
 require 'rails_helper'
 
 RSpec.describe Services::ComplaintResponses::CreateComplaintResponseService, type: :service do
-
   let(:complaint) { create(:complaint) }
   let(:company) { create(:company) }
 
   let(:complaint_response_attributes) do
     {
-        response_text: 'description complaint',
-        owner_id: company.id,
-        owner_type: 'Company',
-        complaint_id: complaint.id
+      response_text: 'description complaint',
+      owner_id: company.id,
+      owner_type: 'Company',
+      complaint_id: complaint.id
     }
   end
 
@@ -38,14 +37,14 @@ RSpec.describe Services::ComplaintResponses::CreateComplaintResponseService, typ
     end
 
     context 'when missig some params' do
-      let(:complaint_response_attributes) {
+      let(:complaint_response_attributes) do
         {
-            response_text: '',
-            owner_id: company.id,
-            owner_type: 'Company',
-            complaint_id: complaint.id
+          response_text: '',
+          owner_id: company.id,
+          owner_type: 'Company',
+          complaint_id: complaint.id
         }
-      }
+      end
 
       subject { Services::ComplaintResponses::CreateComplaintResponseService.new(complaint_response_attributes) }
 
@@ -62,14 +61,14 @@ RSpec.describe Services::ComplaintResponses::CreateComplaintResponseService, typ
     end
 
     context 'when pass wrong owner_type' do
-      let(:complaint_response_attributes) {
+      let(:complaint_response_attributes) do
         {
-            response_text: '',
-            owner_id: company.id,
-            owner_type: 'Test',
-            complaint_id: complaint.id
+          response_text: '',
+          owner_id: company.id,
+          owner_type: 'Test',
+          complaint_id: complaint.id
         }
-      }
+      end
 
       subject { Services::ComplaintResponses::CreateComplaintResponseService.new(complaint_response_attributes) }
 
@@ -85,14 +84,14 @@ RSpec.describe Services::ComplaintResponses::CreateComplaintResponseService, typ
     end
 
     context 'when pass wrong complaint_id' do
-      let(:complaint_response_attributes) {
+      let(:complaint_response_attributes) do
         {
-            response_text: '',
-            owner_id: company.id,
-            owner_type: 'Customer',
-            complaint_id: 'wrong'
+          response_text: '',
+          owner_id: company.id,
+          owner_type: 'Customer',
+          complaint_id: 'wrong'
         }
-      }
+      end
 
       subject { Services::ComplaintResponses::CreateComplaintResponseService.new(complaint_response_attributes) }
 

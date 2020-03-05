@@ -10,7 +10,6 @@ RSpec.describe Queries::ComplaintQuery, type: :query do
   end
 
   describe 'return result' do
-
     let(:city_1) { create(:city, name: 'Maceió') }
     let(:city_2) { create(:city, name: 'Recife') }
 
@@ -36,54 +35,57 @@ RSpec.describe Queries::ComplaintQuery, type: :query do
     end
 
     context 'when pass company_id' do
-      it { expect(subject.call({company_id: company_1.id}).count).to eq 3 }
-      it { expect(subject.call({company_id: company_1.id})).to include complaint_1 }
-      it { expect(subject.call({company_id: company_1.id})).to include complaint_1_1 }
-      it { expect(subject.call({company_id: company_1.id})).to include complaint_2 }
+      it { expect(subject.call({ company_id: company_1.id }).count).to eq 3 }
+      it { expect(subject.call({ company_id: company_1.id })).to include complaint_1 }
+      it { expect(subject.call({ company_id: company_1.id })).to include complaint_1_1 }
+      it { expect(subject.call({ company_id: company_1.id })).to include complaint_2 }
     end
 
     context 'when pass customer_id' do
-      it { expect(subject.call({customer_id: customer_2.id}).count).to eq 2 }
-      it { expect(subject.call({customer_id: customer_2.id})).to include complaint_2 }
-      it { expect(subject.call({customer_id: customer_2.id})).to include complaint_5 }
+      it { expect(subject.call({ customer_id: customer_2.id }).count).to eq 2 }
+      it { expect(subject.call({ customer_id: customer_2.id })).to include complaint_2 }
+      it { expect(subject.call({ customer_id: customer_2.id })).to include complaint_5 }
     end
 
     context 'when pass company_id and customer_id' do
-      it { expect(subject.call({company_id: company_1.id, customer_id: customer_1.id}).count).to eq 2 }
-      it { expect(subject.call({company_id: company_1.id, customer_id: customer_1.id})).to include complaint_1 }
-      it { expect(subject.call({company_id: company_1.id, customer_id: customer_1.id})).to include complaint_1_1 }
+      it { expect(subject.call({ company_id: company_1.id, customer_id: customer_1.id }).count).to eq 2 }
+      it { expect(subject.call({ company_id: company_1.id, customer_id: customer_1.id })).to include complaint_1 }
+      it { expect(subject.call({ company_id: company_1.id, customer_id: customer_1.id })).to include complaint_1_1 }
     end
 
     context 'when pass company_id, customer_id and locale' do
-      it { expect(subject.call({company_id: company_1.id, customer_id: customer_1.id, locale: 'Maceió'}).count).to eq 2 }
-      it { expect(subject.call({company_id: company_1.id, customer_id: customer_1.id, locale: 'Maceió'})).to include complaint_1 }
-      it { expect(subject.call({company_id: company_1.id, customer_id: customer_1.id, locale: 'Maceió'})).to include complaint_1_1 }
+      it { expect(subject.call({ company_id: company_1.id, customer_id: customer_1.id, locale: 'Maceió' }).count).to eq 2 }
+      it { expect(subject.call({ company_id: company_1.id, customer_id: customer_1.id, locale: 'Maceió' })).to include complaint_1 }
+      it { expect(subject.call({ company_id: company_1.id, customer_id: customer_1.id, locale: 'Maceió' })).to include complaint_1_1 }
     end
 
     context 'when pass company_id and locale' do
-      it { expect(subject.call({company_id: company_2.id, locale: 'Maceió'}).count).to eq 1 }
-      it { expect(subject.call({company_id: company_2.id, locale: 'Recife'}).count).to eq 1 }
-      it { expect(subject.call({company_id: company_2.id, locale: 'Maceió'})).to include complaint_4 }
-      it { expect(subject.call({company_id: company_2.id, locale: 'Recife'})).to include complaint_3 }
+      it { expect(subject.call({ company_id: company_2.id, locale: 'Maceió' }).count).to eq 1 }
+      it { expect(subject.call({ company_id: company_2.id, locale: 'Recife' }).count).to eq 1 }
+      it { expect(subject.call({ company_id: company_2.id, locale: 'Maceió' })).to include complaint_4 }
+      it { expect(subject.call({ company_id: company_2.id, locale: 'Recife' })).to include complaint_3 }
     end
 
     context 'when pass customer_id and locale' do
-      it { expect(subject.call({customer_id: customer_1.id, locale: 'Maceió'}).count).to eq 3 }
-      it { expect(subject.call({customer_id: customer_1.id, locale: 'Maceió'})).to include complaint_1 }
-      it { expect(subject.call({customer_id: customer_1.id, locale: 'Maceió'})).to include complaint_1_1 }
-      it { expect(subject.call({customer_id: customer_1.id, locale: 'Maceió'})).to include complaint_4 }
+      it { expect(subject.call({ customer_id: customer_1.id, locale: 'Maceió' }).count).to eq 3 }
+      it { expect(subject.call({ customer_id: customer_1.id, locale: 'Maceió' })).to include complaint_1 }
+      it { expect(subject.call({ customer_id: customer_1.id, locale: 'Maceió' })).to include complaint_1_1 }
+      it { expect(subject.call({ customer_id: customer_1.id, locale: 'Maceió' })).to include complaint_4 }
     end
 
     context 'when pass locale' do
-      it { expect(subject.call({locale: 'Maceió'}).count).to eq 5 }
-      it { expect(subject.call({locale: 'Recife'}).count).to eq 1 }
-      it { expect(subject.call({locale: 'Maceió'})).to include complaint_1 }
-      it { expect(subject.call({locale: 'Maceió'})).to include complaint_1_1 }
-      it { expect(subject.call({locale: 'Maceió'})).to include complaint_2 }
-      it { expect(subject.call({locale: 'Recife'})).to include complaint_3 }
-      it { expect(subject.call({locale: 'Maceió'})).to include complaint_4 }
-      it { expect(subject.call({locale: 'Maceió'})).to include complaint_5 }
+      it { expect(subject.call({ locale: 'Maceió' }).count).to eq 5 }
+      it { expect(subject.call({ locale: 'Recife' }).count).to eq 1 }
+      it { expect(subject.call({ locale: 'Maceió' })).to include complaint_1 }
+      it { expect(subject.call({ locale: 'Maceió' })).to include complaint_1_1 }
+      it { expect(subject.call({ locale: 'Maceió' })).to include complaint_2 }
+      it { expect(subject.call({ locale: 'Recife' })).to include complaint_3 }
+      it { expect(subject.call({ locale: 'Maceió' })).to include complaint_4 }
+      it { expect(subject.call({ locale: 'Maceió' })).to include complaint_5 }
     end
 
+    context 'when pass a invalid locale name' do
+      it { expect(subject.call({ locale: 'Recif' }).count).to eq 0 }
+    end
   end
 end

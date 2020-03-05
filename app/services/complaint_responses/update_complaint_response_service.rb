@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 module Services
   module ComplaintResponses
     class UpdateComplaintResponseService
       include ::Services::ComplaintResponses::Concern::ValidateComplaintResponseOwnerType
 
-      def initialize complaint_response_params
+      def initialize(complaint_response_params)
         @complaint_response_params = complaint_response_params
         check_permitted_owner_type
         complaint_id = complaint_response_params.delete(:complaint_id)
@@ -12,7 +14,7 @@ module Services
         @complaint_response = find_complaint_response @complaint, complaint_response_id
       end
 
-      def call &block
+      def call(&block)
         if @complaint_response.update(@complaint_response_params)
           block.call(::Callbacks::UseCaseCallback.success(@complaint_response))
         else
@@ -22,14 +24,13 @@ module Services
 
       private
 
-      def find_complaint complaint_id
+      def find_complaint(complaint_id)
         Complaint.find(complaint_id)
       end
 
-      def find_complaint_response complaint, id
+      def find_complaint_response(complaint, id)
         complaint.complaint_responses.find(id)
       end
-
     end
   end
 end

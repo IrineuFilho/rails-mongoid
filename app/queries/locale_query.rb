@@ -4,7 +4,7 @@ module Queries
   class LocaleQuery
     class << self
       def call(name)
-        City.where({name: /#{name}/i})
+        City.where({ name: /#{name}/i })
       end
     end
   end

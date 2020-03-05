@@ -17,7 +17,7 @@ RSpec.describe LocalesController, type: :request do
       }
 
       it {
-        get '/locales', params: {name: 'Mace'}
+        get '/locales', params: { name: 'Mace' }
         expect(body).to include(city.id)
       }
     end

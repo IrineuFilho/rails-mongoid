@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Services
   module ComplaintResponses
     module Concern
@@ -9,7 +11,6 @@ module Services
 
           raise ::Exceptions::BadRequestException, ['owner type must be Customer or Company']
         end
-
       end
     end
   end

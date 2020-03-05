@@ -1,14 +1,13 @@
 # frozen_string_literal: true
 
 class ComplaintResponsesController < ApplicationController
-
   before_action :set_complaint, only: %i[destroy]
   before_action :set_complaint_response, only: %i[destroy]
 
   api :POST, '/complaints/:complaint_id/complaint_responses', 'Create a complaint response in a complaint'
   param :complaint_id, String, desc: "Complaint's ID", required: true
-  param :response_text, String, desc: "Response Text", required: true
-  param :owner_id, String, desc: "ID of owner response", required: true
+  param :response_text, String, desc: 'Response Text', required: true
+  param :owner_id, String, desc: 'ID of owner response', required: true
   param :owner_type, %w[Customer Company], desc: 'Type of owner response', required: true
 
   def create
@@ -25,8 +24,8 @@ class ComplaintResponsesController < ApplicationController
   api :PUT, '/complaints/:complaint_id/complaint_responses/:id', 'Create a complaint response in a complaint'
   param :id, String, desc: "Complaint's response ID will be updated", required: true
   param :complaint_id, String, desc: "Complaint's ID", required: true
-  param :response_text, String, desc: "Response Text", required: true
-  param :owner_id, String, desc: "ID of owner response", required: true
+  param :response_text, String, desc: 'Response Text', required: true
+  param :owner_id, String, desc: 'ID of owner response', required: true
   param :owner_type, %w[Customer Company], desc: 'Type of owner response', required: true
   def update
     ::Services::ComplaintResponses::CreateComplaintResponseService.new(complaint_response_params).call do |callback|
@@ -57,15 +56,15 @@ class ComplaintResponsesController < ApplicationController
   end
 
   def set_complaint_response
-    @complaint_response = @complaint.complaint_responses.find({id: params[:id]})
+    @complaint_response = @complaint.complaint_responses.find({ id: params[:id] })
   end
 
   def complaint_response_params
     params
-        .permit(:id,
-                :complaint_id,
-                :response_text,
-                :owner_id,
-                :owner_type)
+      .permit(:id,
+              :complaint_id,
+              :response_text,
+              :owner_id,
+              :owner_type)
   end
 end
