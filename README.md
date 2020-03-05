@@ -13,6 +13,10 @@ Rails Version: 5.2
 
 docker-compose up
 
+Import Cities from Json
+
+> docker exec -it api-core_app_1 rake create_federal_units_and_cities:start 
+
 # Documentation
 
 hit /apipie to see documentation
