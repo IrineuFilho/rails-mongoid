@@ -4,13 +4,15 @@ Ruby Version: 2.6.2
 
 Rails Version: 5.2
 
-#Test
+# Test
 - bundle install
 - rspec
 - rubocop
 
-#To run
+# To run
+
 docker-compose up
 
 # Documentation
+
 hit /apipie to see documentation
