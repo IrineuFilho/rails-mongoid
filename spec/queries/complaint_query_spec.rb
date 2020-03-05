@@ -21,8 +21,8 @@ RSpec.describe Queries::ComplaintQuery, type: :query do
     let(:customer_2) { create(:customer, locale: city_1) }
     let(:customer_3) { create(:customer, locale: city_2) }
 
-    let!(:complaint_1) { create(:complaint, company: company_1, customer: customer_1, locale: customer_1.locale) }
-    let!(:complaint_1_1) { create(:complaint, company: company_1, customer: customer_1, locale: customer_1.locale) }
+    let!(:complaint_1) { create(:complaint, company: company_1, customer: customer_1, locale: customer_1.locale, title: 'Test title') }
+    let!(:complaint_1_1) { create(:complaint, company: company_1, customer: customer_1, locale: customer_1.locale, description: 'more one test') }
     let!(:complaint_2) { create(:complaint, company: company_1, customer: customer_2, locale: customer_2.locale) }
     let!(:complaint_3) { create(:complaint, company: company_2, customer: customer_3, locale: customer_3.locale) }
     let!(:complaint_4) { create(:complaint, company: company_2, customer: customer_1, locale: customer_1.locale) }
@@ -32,6 +32,16 @@ RSpec.describe Queries::ComplaintQuery, type: :query do
 
     context 'when pass {}' do
       it { expect(subject.call({}).count).to eq 6 }
+    end
+
+    context 'when pass title' do
+      it { expect(subject.call({ title: 'test title' }).count).to eq 1 }
+      it { expect(subject.call({ title: 'test title' })).to include complaint_1 }
+    end
+
+    context 'when pass description' do
+      it { expect(subject.call({ description: 'one' }).count).to eq 1 }
+      it { expect(subject.call({ description: 'one' })).to include complaint_1_1 }
     end
 
     context 'when pass company_id' do

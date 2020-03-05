@@ -7,6 +7,8 @@ class ComplaintsController < ApplicationController
   param :company_id, String, desc: "Company's ID", required: false
   param :customer_id, String, desc: "Customer's ID", required: false
   param :locale, String, desc: 'Exact City name', required: false
+  param :title, String, desc: 'Part of title', required: false
+  param :description, String, desc: 'Part of description', required: false
   see 'locales#index', 'list of cities available'
   def index
     begin
@@ -65,7 +67,7 @@ class ComplaintsController < ApplicationController
 
   def complaints_search_params
     params
-      .permit(:locale, :company_id, :customer_id)
+      .permit(:locale, :company_id, :customer_id, :title, :description)
       .to_h
   end
 end

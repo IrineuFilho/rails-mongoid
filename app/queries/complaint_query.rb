@@ -26,6 +26,10 @@ module Queries
           { 'customer._id': BSON::ObjectId(value) }
         when :locale
           { 'locale.name': value }
+        when :description
+          { 'description': /#{value}/i }
+        when :title
+          { 'title': /#{value}/i }
         else
           raise ArgumentError, 'Field to filter a Complaint is invalid'
         end
