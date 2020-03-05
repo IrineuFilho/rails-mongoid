@@ -15,17 +15,17 @@ module Queries
         memo
       end
 
-      def map_field field
+      def map_field(field)
         key = field.first.to_sym
         value = field.last
 
         case key
         when :company_id
-          {'company._id': BSON::ObjectId(value)}
+          { 'company._id': BSON::ObjectId(value) }
         when :customer_id
-          {'customer._id': BSON::ObjectId(value)}
+          { 'customer._id': BSON::ObjectId(value) }
         when :locale
-          {'locale.name': value}
+          { 'locale.name': value }
         else
           raise ArgumentError, 'Field to filter a Complaint is invalid'
         end

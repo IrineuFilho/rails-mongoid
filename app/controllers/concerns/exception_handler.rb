@@ -4,6 +4,10 @@ module ExceptionHandler
   extend ActiveSupport::Concern
 
   included do
+    rescue_from Apipie::ParamInvalid do |e|
+      render json: e, status: :bad_request
+    end
+
     rescue_from ::Exceptions::BadRequestException do |e|
       render json: e.errors, status: :bad_request
     end
