@@ -10,7 +10,9 @@ Rails Version: 5.2
 - rubocop
 
 #To run
+
 docker-compose up
 
 # Documentation
+
 hit /apipie to see documentation
