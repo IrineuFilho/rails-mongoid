@@ -1,24 +1,16 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Ruby Version: 2.6.2
 
-Things you may want to cover:
+Rails Version: 5.2
 
-* Ruby version
+#Test
+- bundle install
+- rspec
+- rubocop
 
-* System dependencies
+#To run
+docker-compose up
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+# Documentation
+hit /apipie to see documentation
