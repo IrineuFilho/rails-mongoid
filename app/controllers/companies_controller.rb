@@ -22,7 +22,7 @@ class CompaniesController < ApplicationController
   param :name, String, desc: "Company's name", required: true
   param :cnpj, String, desc: "Company's CNPJ", required: true
   param :locale, String, desc: 'Exact name of City', required: true
-  see 'locales#index', 'list of cities available'
+  see 'locales#index', 'list of available cities'
   def create
     ::Services::Companies::CreateCompanyService.new(company_params).call do |callback|
       callback.on_success do |company|
