@@ -7,7 +7,7 @@ class CustomersController < ApplicationController
   param :name, String, desc: "Part of customer's name", required: false
   param :email, String, desc: "Part of customer's email", required: false
   param :locale, String, desc: "Part of customer's cities", required: false
-  see 'locales#index', 'list of cities available'
+  see 'locales#index', 'list of available cities'
   def index
     @customers = ::Queries::CustomerQuery.call(permitted_fields)
     render json: @customers
@@ -23,7 +23,7 @@ class CustomersController < ApplicationController
   param :name, String, desc: "Customer's name", required: true
   param :email, String, desc: "Customers's email", required: true
   param :locale, String, desc: 'Exact name of City', required: true
-  see 'locales#index', 'list of cities available'
+  see 'locales#index', 'list of available cities'
   def create
     ::Services::Customers::CreateCustomerService.new(customer_params).call do |callback|
       callback.on_success do |customer|

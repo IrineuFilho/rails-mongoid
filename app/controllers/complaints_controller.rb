@@ -3,13 +3,13 @@
 class ComplaintsController < ApplicationController
   before_action :set_complaint, only: %i[show destroy]
 
-  api :GET, '/complaints', 'List of complaints'
+  api :GET, '/complaints', 'List of complaints. You can filter complaints based on params informed. The query will use \'and\' in the case more than one parameter are informed'
   param :company_id, String, desc: "Company's ID", required: false
   param :customer_id, String, desc: "Customer's ID", required: false
   param :locale, String, desc: 'Exact City name', required: false
   param :title, String, desc: 'Part of title', required: false
   param :description, String, desc: 'Part of description', required: false
-  see 'locales#index', 'list of cities available'
+  see 'locales#index', 'list of available cities'
   def index
     begin
       result = ::Queries::ComplaintQuery.call(complaints_search_params.to_h)
