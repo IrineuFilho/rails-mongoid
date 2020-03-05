@@ -10,6 +10,8 @@ class ComplaintResponse
 
   embedded_in :complaint
 
+  validates :response_text, presence: true
+
   def owner
     owner_type.constantize.find({ id: owner_id })
   end

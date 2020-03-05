@@ -1,40 +1,54 @@
 # frozen_string_literal: true
 
 class CompaniesController < ApplicationController
-  before_action :set_company, only: %i[show update destroy]
+  before_action :set_company, only: %i[show destroy]
 
+  api :GET, '/companies', 'List companies'
+  param :name, String, desc: 'Part of company\'s name'
+  param :locale, String, desc: 'Exact name of City', required: false
+  param :direction, %w[asc desc], desc: 'Sort Direction. Must be asc or desc'
   def index
-    @companies = ::Queries::CompanyQuery.call(company_filter, direction: params[:direction].downcase)
+    @companies = ::Queries::CompanyQuery.call(company_filter, direction: params_direction)
     render json: @companies
   end
 
+  api :GET, '/companies/:id', "Company's detail"
+  param :id, String, desc: "Company's ID", required: true
   def show
     render json: @company
   end
 
+  api :POST, '/companies', 'Create a company'
+  param :name, String, desc: "Company's name", required: true
+  param :cnpj, String, desc: "Company's CNPJ", required: true
+  param :locale, String, desc: 'Exact name of City', required: true
+  see 'locales#index', 'list of cities available'
   def create
-    @company = Company.create(company_params)
-
-    if @company.persisted?
-      render json: @company, status: :created
-    else
-      render json: @company.errors, status: :unprocessable_entity
+    ::Services::Companies::CreateCompanyService.new(company_params).call do |callback|
+      callback.on_success do |company|
+        render json: company, status: :created
+      end
+      callback.on_fail do |errors|
+        render json: errors, status: :unprocessable_entity
+      end
     end
   end
 
-  def update
-    if @company.update(company_params)
-      render json: @company
-    else
-      render json: @company.errors, status: :unprocessable_entity
-    end
-  end
-
+  api :DELETE, '/companies/:id', 'Delete a company'
+  param :id, String, desc: "Company's ID", required: true
   def destroy
     @company.destroy
   end
 
   private
+
+  def params_direction
+    if params[:direction].present?
+      params[:direction].downcase
+    else
+      'asc'
+    end
+  end
 
   def set_company
     @company = Company.find(params[:id])
@@ -42,14 +56,13 @@ class CompaniesController < ApplicationController
 
   def company_params
     params
-      .require(:company)
       .permit(:name,
               :cnpj,
-              :city_id)
+              :locale)
   end
 
   def company_filter
     params
-      .permit(:name, :cnpj)
+      .permit(:name, :cnpj, :locale)
   end
 end
